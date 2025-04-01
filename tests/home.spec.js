@@ -4,7 +4,7 @@ test.beforeEach(async ({page}) => {
   await page.goto('https://automationpratice.com.br/');
 })
 
-test.only('send email', async ({page}) => {
+test.only('sending newsletter', async ({page}) => {
     await page.locator('[name="EMAIL"]').scrollIntoViewIfNeeded();
     await page.locator('[name="EMAIL"]').fill('teste@gmail.com');
     await page.getByText('Send Mail').click();
