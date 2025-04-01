@@ -1,8 +1,10 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 
-test('Login successfully', async ({ page }) => {
+test.beforeEach(async ({page}) => {
   await page.goto('https://automationpratice.com.br/');
+})
+test('Login successfully', async ({ page }) => {
   await page.getByRole('link', { name: ' Login' }).click();
   await page.locator('#user').fill('teste@gmail.com');
   await page.locator('#password').fill('teste123456');
@@ -14,7 +16,7 @@ test('Login successfully', async ({ page }) => {
 });
 
 test('Login with invalid credentials', async ({page}) => {
-  await page.goto('https://automationpratice.com.br/');
+  //await page.goto('https://automationpratice.com.br/');
   await page.getByRole('link', { name: ' Login' }).click();
   await page.locator('#user').fill('teste@mail');
   await page.locator('#password').fill('123');
