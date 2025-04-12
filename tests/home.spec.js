@@ -1,14 +1,20 @@
-import { test, expect } from '@playwright/test';
+const {test, expect} = require ('@playwright/test');
+const {HomePage} = require('../pages/homePage');
 
 test.beforeEach(async ({page}) => {
   await page.goto('https://automationpratice.com.br/');
 })
 
-test.only('sending newsletter', async ({page}) => {
-    await page.locator('[name="EMAIL"]').scrollIntoViewIfNeeded();
-    await page.locator('[name="EMAIL"]').fill('teste@gmail.com');
-    await page.getByText('Send Mail').click();
+test('sending newsletter', async ({page}) => {
+    const homePage = new HomePage(page);
+    
+    const email = 'teste@gmail.com';
+    const expectedTitle = 'Success';
+    const expectedMessage = 'Thank you for your Subscribtion';
+    
+    await homePage.inputNewsletterEmail(email);
+    await homePage.submitNewsletter();
   
-    await expect(page.locator('#swal2-title')).toContainText('Success');
-    await expect(page.locator('#swal2-html-container')).toContainText('Thank you for your Subscribtion');
+    await expect(page.locator('#swal2-title')).toContainText(expectedTitle);
+    await expect(page.locator('#swal2-html-container')).toContainText(expectedMessage);
   });
